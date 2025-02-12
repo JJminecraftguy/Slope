@@ -36,19 +36,6 @@
             }
         }
 
-        function goFullScreen() {
-            let gameContainer = document.getElementById("gameContainer");
-            if (gameContainer.requestFullscreen) {
-                gameContainer.requestFullscreen();
-            } else if (gameContainer.mozRequestFullScreen) { // Firefox
-                gameContainer.mozRequestFullScreen();
-            } else if (gameContainer.webkitRequestFullscreen) { // Chrome, Safari & Edge
-                gameContainer.webkitRequestFullscreen();
-            } else if (gameContainer.msRequestFullscreen) { // IE/Edge
-                gameContainer.msRequestFullscreen();
-            }
-        }
-
         window.addEventListener("resize", resizeGame);
         window.addEventListener("fullscreenchange", resizeGame); // Adjust when fullscreen is triggered
 
@@ -93,7 +80,7 @@
 
 <body onload="resizeGame()">
     <div class="webgl-content">
-        <div id="gameContainer" onclick="goFullScreen()"></div>
+        <div id="gameContainer"></div>
     </div>
     
     <script async src="//static.getclicky.com/101393847.js"></script>
