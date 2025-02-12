@@ -20,10 +20,24 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="TemplateData/unityloader41.js"></script>
+    
     <script>
+        function resizeGame() {
+            let gameContainer = document.getElementById("gameContainer");
+            if (gameContainer) {
+                gameContainer.style.width = window.innerWidth + "px";
+                gameContainer.style.height = window.innerHeight + "px";
+            }
+        }
+
+        window.addEventListener("resize", resizeGame);
+
         var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { 
             onProgress: UnityProgress, 
-            Module: { onRuntimeInitialized: function() { UnityProgress(gameInstance, "complete") } }
+            Module: { onRuntimeInitialized: function() { 
+                UnityProgress(gameInstance, "complete"); 
+                resizeGame(); // Ensure correct size on load
+            }}
         });
     </script>
     
@@ -40,13 +54,16 @@
             height: 100vh;
         }
         #gameContainer {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
         }
     </style>
 </head>
 
-<body>
+<body onload="resizeGame()">
     <div class="webgl-content">
         <div id="gameContainer"></div>
     </div>
