@@ -23,15 +23,26 @@
     <script>
         function resizeGame() {
             var gameContainer = document.getElementById("gameContainer");
-            gameContainer.style.width = window.innerWidth + "px";
-            gameContainer.style.height = window.innerHeight + "px";
+            if (gameContainer) {
+                gameContainer.style.width = window.innerWidth + "px";
+                gameContainer.style.height = window.innerHeight + "px";
+            }
         }
         window.addEventListener("resize", resizeGame);
         window.addEventListener("fullscreenchange", resizeGame);
         window.addEventListener("webkitfullscreenchange", resizeGame);
         window.addEventListener("mozfullscreenchange", resizeGame);
         window.addEventListener("MSFullscreenChange", resizeGame);
-        document.addEventListener("DOMContentLoaded", resizeGame);
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { 
+                onProgress: UnityProgress, 
+                Module: { onRuntimeInitialized: function() { 
+                    UnityProgress(gameInstance, "complete"); 
+                    resizeGame(); 
+                }}
+            });
+        });
     </script>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2541434264715219" crossorigin="anonymous"></script>
