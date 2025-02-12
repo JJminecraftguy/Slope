@@ -28,9 +28,29 @@
                 gameContainer.style.width = window.innerWidth + "px";
                 gameContainer.style.height = window.innerHeight + "px";
             }
+
+            // Force Unity canvas to resize properly
+            if (typeof gameInstance !== 'undefined' && gameInstance !== null) {
+                gameInstance.Module.canvas.width = window.innerWidth;
+                gameInstance.Module.canvas.height = window.innerHeight;
+            }
+        }
+
+        function goFullScreen() {
+            let gameContainer = document.getElementById("gameContainer");
+            if (gameContainer.requestFullscreen) {
+                gameContainer.requestFullscreen();
+            } else if (gameContainer.mozRequestFullScreen) { // Firefox
+                gameContainer.mozRequestFullScreen();
+            } else if (gameContainer.webkitRequestFullscreen) { // Chrome, Safari & Edge
+                gameContainer.webkitRequestFullscreen();
+            } else if (gameContainer.msRequestFullscreen) { // IE/Edge
+                gameContainer.msRequestFullscreen();
+            }
         }
 
         window.addEventListener("resize", resizeGame);
+        window.addEventListener("fullscreenchange", resizeGame); // Adjust when fullscreen is triggered
 
         var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { 
             onProgress: UnityProgress, 
@@ -41,7 +61,7 @@
         });
     </script>
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2541434264715219" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-2541434264715219" crossorigin="anonymous"></script>
     
     <style>
         html, body {
@@ -52,20 +72,28 @@
         .webgl-content {
             width: 100vw;
             height: 100vh;
-        }
-        #gameContainer {
             position: absolute;
             top: 0;
             left: 0;
+        }
+        #gameContainer {
             width: 100vw;
             height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: black;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
         }
     </style>
 </head>
 
 <body onload="resizeGame()">
     <div class="webgl-content">
-        <div id="gameContainer"></div>
+        <div id="gameContainer" onclick="goFullScreen()"></div>
     </div>
     
     <script async src="//static.getclicky.com/101393847.js"></script>
