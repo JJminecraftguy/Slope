@@ -21,11 +21,6 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="TemplateData/unityloader41.js"></script>
     <script>
-        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { 
-            onProgress: UnityProgress, 
-            Module: { onRuntimeInitialized: function() { UnityProgress(gameInstance, "complete") } }
-        });
-
         function resizeGame() {
             var gameContainer = document.getElementById("gameContainer");
             gameContainer.style.width = window.innerWidth + "px";
@@ -36,6 +31,7 @@
         window.addEventListener("webkitfullscreenchange", resizeGame);
         window.addEventListener("mozfullscreenchange", resizeGame);
         window.addEventListener("MSFullscreenChange", resizeGame);
+        document.addEventListener("DOMContentLoaded", resizeGame);
     </script>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2541434264715219" crossorigin="anonymous"></script>
@@ -45,6 +41,7 @@
             margin: 0;
             overflow: hidden;
             height: 100%;
+            width: 100%;
         }
         .webgl-content {
             width: 100vw;
@@ -57,7 +54,7 @@
     </style>
 </head>
 
-<body onload="resizeGame()">
+<body>
     <div class="webgl-content">
         <div id="gameContainer"></div>
     </div>
@@ -65,3 +62,4 @@
     <script async src="//static.getclicky.com/101393847.js"></script>
     <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101393847ns.gif" /></p></noscript>
 </body>
+
